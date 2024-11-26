@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/main.css" rel="stylesheet">
+</head>
+<body class="grey-bg">
+    <%- include('nav.ejs') %>
+    <form class="form-box" action="/addEdit?_method=PUT" method="POST">
+        <h4>글수정하기</h4>
+        <input name="title" value="<%= postOne.title %>">
+        <input name="content" value="<%= postOne.content %>">
+        <input type="hidden" name="_id" value="<%= postOne._id %>">
+        <button type="submit">수정완료</button>
+    </form> 
+    <form class="form-box" action="/addLike?_method=PUT" method="POST">
+        <h4>좋아요</h4>
+
+        <button type="submit">좋아요</button>
+    </form> 
+</body>
+</html>

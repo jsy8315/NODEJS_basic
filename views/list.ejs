@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/main.css" rel="stylesheet">
+</head>
+<body class="grey-bg">
+    <%- include('nav.ejs') %>
+    <!-- 이렇게 쓰면 데이터 확인 가능 -->
+    <!-- <%= JSON.stringify(posts) %>  -->
+    <div class="white-bg">
+        <% for( let i = 0; i < posts.length; i++){ %>
+            <div class="list-box">
+                <h4>
+                    <a href="/detail/<%= posts[i]._id %>">
+                        <%= posts[i].title %>
+                    </a>
+                </h4>
+                <p><%= posts[i].content %></p>
+                <a href="/edit/<%= posts[i]._id %>">
+                    수정하기
+                </a>
+                <button class="delete01">
+                    🗑️
+                </button>
+                <button class="delete02">
+                    🗑️🗑️
+                </button>
+                <button class="delete03" data-id="<%= posts[i]._id %>">
+                    🗑️🗑️🗑️
+                </button>
+            </div>
+        <% } %>
+    </div> 
+    <script>
+        // URL parameter를 이용해 서버로 데이터 날리기
+        document.getElementsByClassName('delete01')[0].addEventListener('click', function(){
+            console.log('delete 01 버튼클릭');
+
+            fetch('/delete01', {    // 새로고침 없이 서버로 요청 보냄
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({result : 1}) // Object/array를 JSON으로 바꿔줌
+            }) 
+        })
+
+        // URL parameter를 이용해 서버로 데이터 날리기02
+        document.getElementsByClassName('delete02')[0].addEventListener('click', function(){
+            console.log('delete 02 버튼클릭');
+            fetch('/delete02/suyoung', {
+            }) 
+        })        
+
+        // query string을 이용해 서버로 데이터 날리기, URL이 보이는게 단점
+        // document.querySelectorAll('.delete03')[0].addEventListener('click', function(){
+        //     console.log('delete 03 버튼클릭');
+        //     console.log('<%= posts[0]._id %>');
+
+        //     fetch(`/delete03?postId=<%= posts[0]._id %>&name=Jung`) 
+        //     // fetch('/abc?데이터이름=데이터값 -> /abc로 요청보내면, 데이터값을 데이터이름으로 보내줌
+        // })
+
+        let delete03Array = document.querySelectorAll('.delete03');
+        delete03Array.forEach(function (button) {
+            button.addEventListener('click', function (e) {
+                console.log('delete 03 버튼 클릭');
+                console.log('posts.length:', '<%= posts.length %>'); // EJS 렌더링 값 확인
+                fetch('/delete03?postId=' + e.target.dataset.id + '&name=Jung', {
+                    // method : 'DELETE',
+                })
+                // .then((r)=>{
+                //     if(r.status == 200) {
+                //         return r.json()
+                //     } else {
+                //     //서버가 에러코드전송시 실행할코드
+                //     }
+                // })
+                .then((r)=>{
+                    // 누른 버튼의 상위요소 안보이게
+                    e.target.parentElement.style.display = 'none';
+                })
+                .catch((error)=>{
+                    //인터넷문제 등으로 실패시 실행할코드
+                    console.log(error)
+                })
+            });
+        });
+        
+        
+
+    </script>
+  </body>
+</html>
