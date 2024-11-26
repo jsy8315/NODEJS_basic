@@ -34,6 +34,9 @@
             </div>
         <% } %>
     </div> 
+    
+    <a href="/list/next/<%= posts[posts.length - 1]._id %>">다음</a>
+
     <script>
         // URL parameter를 이용해 서버로 데이터 날리기
         document.getElementsByClassName('delete01')[0].addEventListener('click', function(){
@@ -92,6 +95,6 @@
         
         
 
-    </script>
+    </script>\
   </body>
 </html>
