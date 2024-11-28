@@ -1,4 +1,6 @@
 package-lock.json
 package.json
 server.js
+.env
+
 node_modules/
