@@ -8,11 +8,18 @@
 </head>
 <body class="grey-bg">
     <%- include('nav.ejs') %>
-    <form class="form-box" action="/add" method="POST">
+    <!-- <form class="form-box" action="/add" method="POST"> -->
+    <form class="form-box" action="/add" method="POST" enctype="multipart/form-data">
         <h4>글쓰기</h4>
         <input name="title">
         <input name="content">
+        <input type="file" name="img1" accept="image/*" multiple>
         <button type="submit">전송</button>
     </form> 
+    <!-- 이미지 업로드 기능 만들기2
+    1. 글작성페이지에 이미지<input>
+    2. 서버는 이미지 받으면 이미지인지 검사하고, S3에 업로드
+    3. 이미지 URL은 DB에 글과 함께 저장
+    4. 이미지 필요하면 DB에 있던 URL 꺼내서 html에 넣기 -->
 </body>
 </html>
